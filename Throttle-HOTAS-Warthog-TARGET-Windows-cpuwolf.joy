@@ -1,0 +1,186 @@
+I
+1100 Version
+JOY
+
+# NOTE:
+# If X-Plane did not come with a default configuration for your device,
+# and you would like to share *your* configuration with the world,
+# email this file to tyler+joysticks@x-plane.com and we will evaluate
+# it for inclusion with the simulator. Thanks!!
+
+# You can find a complete spec for this file format, with instructions on configuring
+# both the device views and the default configuration here:
+# http://lookup.x-plane.com/_lookup_11_/joy_file_spec.html
+
+# One or more operating systems this file applies to.
+# Windows, macOS, and Linux will index the axes differently, so a file
+# that correctly configures your joystick on one platform is *not*
+# guaranteed to work on the other.
+OS: Windows
+# Other valid options:
+# OS: Linux
+# OS: Mac
+
+# Zero or more device names (provided by the operating system, as seen in the UI)
+# that this .joy file describes.
+# (Note that you need at least one name or one ID, described below.)
+# If more than one device is named, we're saying that *any* of those devices should be configured
+# using the *same* defaults and the same image maps.
+Name: VID:0x044fPID:0xffff
+
+# Zero or more USB identifiers (vendor ID + product ID) that this .joy file describes.
+# (Note that you need at least one ID or Name, described above.)
+# If more than USB identifier is given, we'll use this .joy file to configure *any* of those devices.
+ID: VID:0x044fPID:0xffff
+
+Display: Thrustmaster Combined (cpuwolf)
+
+View: front view
+-----------------------------------------------------------------------
+Image: warthog-cpuwolf-left.png
+
+Axis 2 (Engine 1 Throttle; y): 444 239
+
+Axis 5 (Engine 2 Throttle; y): 330 152
+
+Axis 7 (Nose Wheel steering; y): 528 664
+
+Button 1 (Thumb Hat Switch Press): 694 206
+
+Hat Switch Group (Thumb Hat Switch): 2 3 4 5
+Button 2: 646 182
+
+Button Group (Eng Oper R): 30 31
+Button 30 (Ign): 703 550
+Button 31 (Motor): 673 561
+
+Button 19 (APU): 555 565
+
+Button 20 (L/G Wrn): 405 618
+
+Button Group (Flaps): 21 22
+Button 21 (Up): 322 397
+Button 22 (Dn): 335 415
+
+Button 23 (EAC Off): 139 506
+
+Button 24 (Nrm): 181 573
+
+Button 25 (Autopilot Toggle): 201 627
+
+Button Group (Autopilot switch): 26 27
+Button 26 (PATH): 252 694
+Button 27 (ALT): 219 705
+
+Button Group (Red thumb Button): 11 10
+Button 11 (back): 572 454
+Button 10 (forward): 572 454
+
+Button Group (Gray rocker): 8 9
+Button 8 (back): 616 383
+Button 9 (forward): 616 383
+
+Button Group (Gray slider): 6 7
+Button 6 (back): 652 308
+Button 7 (forward): 652 308
+
+
+View: Throttle Back
+-----------------------------------------------------------------------
+Image: warthog-cpuwolf-right.png
+
+Hat Switch 0 (Thumb Hat Switch): 423 150
+
+Hat Switch Group (Thumb Hat Switch): 15 16 17 18 
+Button 15: 506 195
+
+Button 0 (Thumb Hat Switch Press): 481 208
+
+Button 14 (Red TOGA Button): 657 303
+
+Button Group (light switch): 12 13
+Button 12 (light switch up): 841 427
+Button 13 (light switch down): 841 427
+
+Button Group (Flaps): 21 22
+Button 21 (Up): 704 613
+Button 22 (Dn): 704 613
+
+Button 28 (Hidden PT6 Beta Range): 489 541
+
+
+Assignments:
+--------------------------------------------------------------
+# FORMAT FOR AXES:
+# Axis <axis number>: hidden
+# Axis <axis number>: <joy use>
+#	Valid joy uses are:
+#	 joy_use_none	joy_use_ptch	joy_use_roll
+#	 joy_use_hdng	joy_use_thro	joy_use_coll
+#	 joy_use_lbrk	joy_use_rbrk	joy_use_prop
+#	 joy_use_mixt	joy_use_heat	joy_use_flap
+#	 joy_use_vect	joy_use_swee	joy_use_sbrk
+#	 joy_use_disp	joy_use_reverse	joy_use_elev_tr
+#	 joy_use_ailn_tr	joy_use_rudd_tr	joy_use_thro1
+#	 joy_use_thro2	joy_use_thro3	joy_use_thro4
+#	 joy_use_prop1	joy_use_prop2	joy_use_prop3
+#	 joy_use_prop4	joy_use_mixt1	joy_use_mixt2
+#	 joy_use_mixt3	joy_use_mixt4	joy_use_reverse1
+#	 joy_use_reverse2	joy_use_reverse3	joy_use_reverse4
+#	 joy_use_gear	joy_use_tiller	joy_use_back_thro
+#	 joy_use_cowl_flaps	JOY_OLD_UNUSED	joy_use_view_lr
+#	 joy_use_view_ud	joy_use_view_zoom	joy_use_camera_lr
+#	 joy_use_camera_ud	joy_use_camera_zoom	joy_use_gun_lr
+#	 joy_use_gun_ud	joy_use_vr_touchpad_x	joy_use_vr_touchpad_y
+#	 joy_use_vr_trigger	joy_use_commands
+Axis 0: joy_use_none
+Axis 1: joy_use_none
+Axis 2: joy_use_thro
+Axis 3: joy_use_none
+Axis 4: joy_use_none
+Axis 5: joy_use_none
+Axis 6: joy_use_none
+Axis 7: joy_use_none
+
+
+# FORMAT FOR BUTTONS:
+# Button <button number>: hidden
+# Button <button number>: <command path, like "sim/operation/quit">
+#	See X-Plane/Resources/plugins/Commands.txt for a complete list of commands
+Button 0: sim/GPS/g1000n3_cursor
+Button 1: sim/GPS/g1000n3_cursor
+Button 2: sim/GPS/g1000n3_fms_inner_down
+Button 3: sim/GPS/g1000n3_fms_outer_up
+Button 4: sim/GPS/g1000n3_fms_inner_up
+Button 5: sim/GPS/g1000n3_fms_outer_down
+Button 6: sim/GPS/g1000n3_range_up
+Button 7: sim/GPS/g1000n3_range_down
+Button 10: sim/GPS/g1000n3_ent
+Button 11: sim/GPS/g1000n3_clr
+Button 12: tbm900/actuators/lights/landing_lights_up
+Button 13: tbm900/actuators/lights/landing_lights_down
+Button 14: sim/autopilot/take_off_go_around
+Button 15: sim/radios/stby_com1_coarse_down
+Button 16: sim/radios/stby_com1_coarse_up
+Button 17: sim/radios/stby_com1_fine_up_833
+Button 18: sim/radios/stby_com1_fine_down_833
+Button 20: cpuwolf/XTouchDownRecorder/Toggle
+Button 21: sim/flight_controls/flaps_up
+Button 22: sim/flight_controls/flaps_down
+Button 24: tbm900/actuators/elec/starter_down
+Button 25: sim/replay/replay_controls_toggle
+Button 27: tbm900/actuators/gear/pump_cover
+Button 28: sim/engines/thrust_reverse_toggle
+Button 29: sim/engines/mixture_down
+Button 30: sim/engines/engage_starters
+Button 31: tbm900/actuators/elec/starter_down
+
+
+# FORMAT FOR HAT SWITCHES:
+# Hat Switch <hat switch number>: hidden
+# Hat Switch <hat switch number> Direction <hat switch direction>: <command path, like "sim/operation/quit">
+#	See X-Plane/Resources/plugins/Commands.txt for a complete list of commands
+Hat Switch 0 Direction 0: sim/GPS/g1000n3_pan_up
+Hat Switch 0 Direction 2: sim/GPS/g1000n3_pan_right
+Hat Switch 0 Direction 4: sim/GPS/g1000n3_pan_down
+Hat Switch 0 Direction 6: sim/GPS/g1000n3_pan_left

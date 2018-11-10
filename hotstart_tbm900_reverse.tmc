@@ -1,0 +1,120 @@
+include "target.tmh"
+
+
+//written by Wei Shuai <cpuwolf@gmail.com> 2018 Nov
+char light_flag;
+char flaps_flag;
+//program startup
+int main()
+{
+	//Exclude joystick
+	Configure(&Joystick,MODE_EXCLUDED);
+	Configure(&HCougar,MODE_EXCLUDED);
+	Configure(&T16000,MODE_EXCLUDED);
+	Configure(&LMFD,MODE_EXCLUDED);
+	Configure(&RMFD,MODE_EXCLUDED);
+    if(Init(&EventHandle)) return 1; // declare the event handler, return on error
+	
+	//add initialization code here
+	//initialize backlight power
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_INTENSITY, 0));
+	//initialize LED status all "OFF"
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED1)); //set LED 1 OFF
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED2)); //set LED 2 OFF
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED3)); //set LED 3 OFF
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED4)); //set LED 4 OFF
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED5)); //set LED 5 OFF
+	
+	light_flag = 0;
+	flaps_flag = 0;
+	//throttle
+	//-->axis
+	MapAxis(&Throttle, THR_LEFT, DX_ZROT_AXIS);
+	MapAxis(&Throttle, THR_RIGHT, DX_Z_AXIS);
+	//MapAxis(&Throttle, SCX, DX_XROT_AXIS);
+	//MapAxis(&Throttle, SCY, DX_YROT_AXIS);
+	MapAxis(&Throttle, THR_FC, DX_SLIDER_AXIS);
+	//-->buttons
+	MapKey(&Throttle, SC, DX1);
+	MapKey(&Throttle, MSP, DX2);
+	MapKey(&Throttle, MSU, DX3);
+	MapKey(&Throttle, MSR, DX4);
+	MapKey(&Throttle, MSD, DX5);
+	MapKey(&Throttle, MSL, DX6);
+	MapKey(&Throttle, SPDF, DX7);
+	MapKey(&Throttle, SPDB, DX8);
+	MapKey(&Throttle, BSF, DX9);
+	MapKey(&Throttle, BSB, DX10);
+	MapKey(&Throttle, CHF, DX11);
+	MapKey(&Throttle, CHB, DX12);
+	//---
+	//MapKey(&Throttle, PSF, DX13);
+	//MapKey(&Throttle, PSB, DX14);
+	//---
+	MapKey(&Throttle, PSF, CHAIN(EXEC("if(light_flag>0) ActKey(PULSE+KEYON+DX13);else ActKey(PULSE+KEYON+DX14);"),EXEC("light_flag=0;")));
+	MapKey(&Throttle, PSM, CHAIN(EXEC("if(light_flag>1) ActKey(PULSE+KEYON+DX13);else ActKey(PULSE+KEYON+DX14);"),EXEC("light_flag=1;")));
+	MapKey(&Throttle, PSB, CHAIN(EXEC("if(light_flag>2) ActKey(PULSE+KEYON+DX13);else ActKey(PULSE+KEYON+DX14);"),EXEC("light_flag=2;")));
+	//---
+	MapKey(&Throttle, LTB, DX15);
+	//my defined DX keys+
+	KeyAxis(&Throttle, SCX, 0, AXMAP2(LIST(0,5,50,95,100),
+		DOWN+DX16,
+		UP+DX16,
+		UP+DX17,
+		DOWN+DX17));
+	KeyAxis(&Throttle, SCY, 0, AXMAP2(LIST(0,5,50,95,100),
+		DOWN+DX18,
+		UP+DX18,
+		UP+DX19,
+		DOWN+DX19));
+	//my defined DX keys-
+	MapKey(&Throttle, APUOFF, DX20);
+	MapKey(&Throttle, LDGH, DX21);
+	
+	//---
+	//MapKey(&Throttle, FLAPU, DX22);
+	//MapKey(&Throttle, FLAPD, DX23);
+	//---
+	MapKey(&Throttle, FLAPU, CHAIN(EXEC("if(flaps_flag>0) ActKey(PULSE+KEYON+DX22);else ActKey(PULSE+KEYON+DX23);"),EXEC("flaps_flag=0;")));
+	MapKey(&Throttle, FLAPM, CHAIN(EXEC("if(flaps_flag>1) ActKey(PULSE+KEYON+DX22);else ActKey(PULSE+KEYON+DX23);"),EXEC("flaps_flag=1;")));
+	MapKey(&Throttle, FLAPD, CHAIN(EXEC("if(flaps_flag>2) ActKey(PULSE+KEYON+DX22);else ActKey(PULSE+KEYON+DX23);"),EXEC("flaps_flag=2;")));
+	//---
+	MapKey(&Throttle, EACON, DX24);
+	MapKey(&Throttle, RDRNRM, DX25);
+	MapKey(&Throttle, APENG, DX26);
+	MapKey(&Throttle, APAH, DX27);
+	MapKey(&Throttle, APPAT, DX28);
+	//29 empty (assign to beta range)
+	//30 empty
+	MapKey(&Throttle, EORIGN, DX31);
+	//---
+	//MapKey(&Throttle, EORIGN, DX32);
+	MapKey(&Throttle, EORMOTOR, DX32);
+	//---
+	//
+	MapKey(&Throttle, CSU, DXHATUP);
+	MapKey(&Throttle, CSD, DXHATDOWN);
+	MapKey(&Throttle, CSL, DXHATLEFT);
+	MapKey(&Throttle, CSR, DXHATRIGHT);
+	//
+	//THR_RIGHT range 0~34 beta range 34~100 flight range
+	KeyAxis(&Throttle, THR_RIGHT, 0, AXMAP2(LIST(0,15,34,100),
+		CHAIN(LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1),
+			LED(&Throttle, LED_ONOFF,LED_CURRENT+LED2),
+			LED(&Throttle, LED_INTENSITY, 200)),
+		CHAIN(DOWN+DX29,LED(&Throttle, LED_ONOFF,LED_CURRENT+LED1),
+			LED(&Throttle, LED_ONOFF, LED_CURRENT-LED2),
+			LED(&Throttle, LED_INTENSITY, 80)),
+		CHAIN(UP+DX29,LED(&Throttle, LED_ONOFF,LED_CURRENT-LED1),
+			LED(&Throttle, LED_ONOFF, LED_CURRENT-LED2),
+			LED(&Throttle, LED_INTENSITY, 0))
+		));
+}
+
+//event handler
+int EventHandle(int type, alias o, int x)
+{
+    DefaultMapping(&o, x);
+	
+	//add event handling code here
+}
