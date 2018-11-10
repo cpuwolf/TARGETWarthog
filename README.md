@@ -15,9 +15,11 @@ highly customize Hotas Warthog dual throttle for X-Plane 11 HotStart TBM-900 air
 
 https://forums.x-plane.org/index.php?/files/file/48249-warthog-throttle-deep-customization-for-tbm-900-win/
 
+Chinese version videos
+https://space.bilibili.com/76970085/#/
+
 
 ## Screenshot on X-Plane 11 ##
 
-![TARGETWarthog](warthog-cpuwolf-left.png)
-![TARGETWarthog](warthog-cpuwolf-right.png)
+![TARGETWarthog](ui_adv.jpg)
 
