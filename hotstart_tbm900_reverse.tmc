@@ -13,9 +13,9 @@ int main()
 	Configure(&T16000,MODE_EXCLUDED);
 	Configure(&LMFD,MODE_EXCLUDED);
 	Configure(&RMFD,MODE_EXCLUDED);
+	
     if(Init(&EventHandle)) return 1; // declare the event handler, return on error
 	
-	//add initialization code here
 	//initialize backlight power
 	ActKey(PULSE+KEYON+LED(&Throttle, LED_INTENSITY, 0));
 	//initialize LED status all "OFF"
@@ -31,8 +31,8 @@ int main()
 	//-->axis
 	MapAxis(&Throttle, THR_LEFT, DX_ZROT_AXIS);
 	MapAxis(&Throttle, THR_RIGHT, DX_Z_AXIS);
-	//MapAxis(&Throttle, SCX, DX_XROT_AXIS);
-	//MapAxis(&Throttle, SCY, DX_YROT_AXIS);
+	MapAxis(&Throttle, SCX, DX_XROT_AXIS);
+	MapAxis(&Throttle, SCY, DX_YROT_AXIS);
 	MapAxis(&Throttle, THR_FC, DX_SLIDER_AXIS);
 	//-->buttons
 	MapKey(&Throttle, SC, DX1);
@@ -57,16 +57,16 @@ int main()
 	//---
 	MapKey(&Throttle, LTB, DX15);
 	//my defined DX keys+
-	KeyAxis(&Throttle, SCX, 0, AXMAP2(LIST(0,5,50,95,100),
-		DOWN+DX16,
-		UP+DX16,
-		UP+DX17,
-		DOWN+DX17));
-	KeyAxis(&Throttle, SCY, 0, AXMAP2(LIST(0,5,50,95,100),
-		DOWN+DX18,
-		UP+DX18,
-		UP+DX19,
-		DOWN+DX19));
+	//KeyAxis(&Throttle, SCX, 0, AXMAP2(LIST(0,5,50,95,100),
+	//	DOWN+DX16,
+	//	UP+DX16,
+	//	UP+DX17,
+	//	DOWN+DX17));
+	//KeyAxis(&Throttle, SCY, 0, AXMAP2(LIST(0,5,50,95,100),
+	//	DOWN+DX18,
+	//	UP+DX18,
+	//	UP+DX19,
+	//	DOWN+DX19));
 	//my defined DX keys-
 	MapKey(&Throttle, APUOFF, DX20);
 	MapKey(&Throttle, LDGH, DX21);

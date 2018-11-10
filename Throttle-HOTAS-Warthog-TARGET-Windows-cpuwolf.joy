@@ -89,10 +89,14 @@ View: Throttle Back
 -----------------------------------------------------------------------
 Image: warthog-cpuwolf-right.png
 
+Axis Group (Throttle axis knob): 3 4 
+Axis 3 (x): 506 195
+Axis 4 (y): 0 0
+
 Hat Switch 0 (Thumb Hat Switch): 423 150
 
-Hat Switch Group (Thumb Hat Switch): 15 16 17 18 
-Button 15: 506 195
+#Hat Switch Group (Thumb Hat Switch): 15 16 17 18
+#Button 15: 506 195
 
 Button 0 (Thumb Hat Switch Press): 481 208
 
@@ -135,12 +139,15 @@ Assignments:
 #	 joy_use_vr_trigger	joy_use_commands
 Axis 0: joy_use_none
 Axis 1: joy_use_none
-Axis 2: joy_use_thro
+Axis 2: joy_use_thro1
 Axis 3: joy_use_none
+Axis 3 Type: centerable
 Axis 4: joy_use_none
-Axis 5: joy_use_none
+Axis 4 Type: centerable
+Axis 5: joy_use_thro2
 Axis 6: joy_use_none
 Axis 7: joy_use_none
+Axis 7 Type: centerable
 
 
 # FORMAT FOR BUTTONS:
