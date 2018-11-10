@@ -56,6 +56,10 @@ int main()
 	MapKey(&Throttle, PSB, CHAIN(EXEC("if(light_flag>2) ActKey(PULSE+KEYON+DX13);else ActKey(PULSE+KEYON+DX14);"),EXEC("light_flag=2;")));
 	//---
 	MapKey(&Throttle, LTB, DX15);
+	MapKey(&Throttle, EFLNORM, DX16);
+	MapKey(&Throttle, EFRNORM, DX17);
+	MapKey(&Throttle, EOLMOTOR, DX18);
+	MapKey(&Throttle, EORMOTOR, DX19);
 	//my defined DX keys+
 	//KeyAxis(&Throttle, SCX, 0, AXMAP2(LIST(0,5,50,95,100),
 	//	DOWN+DX16,
@@ -86,11 +90,8 @@ int main()
 	MapKey(&Throttle, APPAT, DX28);
 	//29 empty (assign to beta range)
 	//30 empty
-	MapKey(&Throttle, EORIGN, DX31);
-	//---
-	//MapKey(&Throttle, EORIGN, DX32);
-	MapKey(&Throttle, EORMOTOR, DX32);
-	//---
+	MapKey(&Throttle, EOLIGN, DX31);
+	MapKey(&Throttle, EORIGN, DX32);
 	//
 	MapKey(&Throttle, CSU, DXHATUP);
 	MapKey(&Throttle, CSD, DXHATDOWN);

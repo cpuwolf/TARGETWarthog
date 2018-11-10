@@ -50,11 +50,25 @@ Button 1 (Thumb Hat Switch Press): 694 206
 Hat Switch Group (Thumb Hat Switch): 2 3 4 5
 Button 2: 646 182
 
-Button Group (Eng Oper R): 30 31
-Button 30 (Ign): 703 550
-Button 31 (Motor): 673 561
+Button Group (Fuel Flow L): 15 102
+Button 15 (Normal): 745 444
+Button 102 (Override): 745 444
 
-Button 19 (APU): 555 565
+Button Group (Fuel Flow R): 16  103
+Button 16 (Normal): 822 501
+Button 103 (Override): 822 501
+
+Button Group (Eng Oper R): 17 30
+Button 30 (Ign): 687 554
+Button 17 (Motor): 687 554
+
+Button Group (Eng Oper L): 18 31
+Button 31 (Ign): 620 492
+Button 18 (Motor): 620 492
+
+Button Group (APU): 19 116
+Button 116 (Start): 555 565
+Button 19 (Off): 555 565
 
 Button 20 (L/G Wrn): 405 618
 
@@ -69,8 +83,8 @@ Button 24 (Nrm): 181 573
 Button 25 (Autopilot Toggle): 201 627
 
 Button Group (Autopilot switch): 26 27
-Button 26 (PATH): 252 694
-Button 27 (ALT): 219 705
+Button 27 (PATH): 252 694
+Button 26 (ALT): 219 705
 
 Button Group (Red thumb Button): 11 10
 Button 11 (back): 572 454
@@ -140,9 +154,9 @@ Assignments:
 Axis 0: joy_use_none
 Axis 1: joy_use_none
 Axis 2: joy_use_thro1
-Axis 3: joy_use_none
+Axis 3: joy_use_commands
 Axis 3 Type: centerable
-Axis 4: joy_use_none
+Axis 4: joy_use_commands
 Axis 4 Type: centerable
 Axis 5: joy_use_thro2
 Axis 6: joy_use_none
@@ -169,8 +183,8 @@ Button 13: tbm900/actuators/lights/landing_lights_down
 Button 14: sim/autopilot/take_off_go_around
 Button 15: sim/radios/stby_com1_coarse_down
 Button 16: sim/radios/stby_com1_coarse_up
-Button 17: sim/radios/stby_com1_fine_up_833
-Button 18: sim/radios/stby_com1_fine_down_833
+Button 17: tbm900/actuators/elec/starter_down
+Button 18: tbm900/actuators/elec/starter_down
 Button 20: cpuwolf/XTouchDownRecorder/Toggle
 Button 21: sim/flight_controls/flaps_up
 Button 22: sim/flight_controls/flaps_down
@@ -180,7 +194,14 @@ Button 27: tbm900/actuators/gear/pump_cover
 Button 28: sim/engines/thrust_reverse_toggle
 Button 29: sim/engines/mixture_down
 Button 30: sim/engines/engage_starters
-Button 31: tbm900/actuators/elec/starter_down
+Button 31: sim/engines/engage_starters
+
+Button 15: Momentary
+Virtual Button 102: Release Button 15
+Button 16: Momentary
+Virtual Button 103: Release Button 16
+Button 19: Momentary
+Virtual Button 116: Release Button 19
 
 
 # FORMAT FOR HAT SWITCHES:
