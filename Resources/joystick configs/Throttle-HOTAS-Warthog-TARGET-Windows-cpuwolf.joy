@@ -58,11 +58,11 @@ Button Group (Fuel Flow R): 16  103
 Button 16 (Normal): 822 501
 Button 103 (Override): 822 501
 
-Button Group (Eng Oper R): 17 30
+Button Group (Eng Oper L): 17 30
 Button 30 (Ign): 687 554
 Button 17 (Motor): 687 554
 
-Button Group (Eng Oper L): 18 31
+Button Group (Eng Oper R): 18 31
 Button 31 (Ign): 620 492
 Button 18 (Motor): 620 492
 
@@ -181,7 +181,7 @@ Button 11: sim/GPS/g1000n3_clr
 Button 12: tbm900/actuators/lights/landing_lights_up
 Button 13: tbm900/actuators/lights/landing_lights_down
 Button 14: sim/autopilot/take_off_go_around
-Button 15: sim/radios/stby_com1_coarse_down
+Button 15: sim/engines/mixture_up
 Button 16: sim/radios/stby_com1_coarse_up
 Button 17: tbm900/actuators/elec/starter_down
 Button 18: tbm900/actuators/elec/starter_down
