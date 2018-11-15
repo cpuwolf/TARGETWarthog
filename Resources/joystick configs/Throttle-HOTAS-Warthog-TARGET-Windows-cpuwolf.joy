@@ -59,16 +59,16 @@ Button 16 (Normal): 822 501
 Button 103 (Override): 822 501
 
 Button Group (Eng Oper L): 17 30
-Button 30 (Ign): 687 554
-Button 17 (Motor): 687 554
+Button 30 (Ign): 620 492
+Button 17 (Motor): 620 492
 
 Button Group (Eng Oper R): 18 31
-Button 31 (Ign): 620 492
-Button 18 (Motor): 620 492
+Button 31 (Ign): 687 554
+Button 18 (Motor): 687 554
 
 Button Group (APU): 19 116
-Button 116 (Start): 555 565
-Button 19 (Off): 555 565
+Button 116 (START): 555 565
+Button 19 (OFF): 555 565
 
 Button 20 (L/G Wrn): 405 618
 
@@ -76,23 +76,29 @@ Button Group (Flaps): 21 22
 Button 21 (Up): 322 397
 Button 22 (Dn): 335 415
 
-Button 23 (EAC Off): 139 506
+Button Group (EAC): 23 108	
+Button 23 (ARM): 139 506
+Button 108 (OFF): 139 506
 
-Button 24 (Nrm): 181 573
+Button Group (RDR ALTM): 24 109
+Button 24 (NRM): 181 573
+Button 109 (Dis): 181 573
 
 Button 25 (Autopilot Toggle): 201 627
 
-Button Group (Autopilot switch): 26 27
-Button 27 (PATH): 252 694
-Button 26 (ALT): 219 705
+Button Group (Autopilot switch): 26 110 27
+Button 27 (ALT): 252 694
+Button 110 (ALT/HDG): 219 705
+Button 26 (PATH): 219 705
 
 Button Group (Red thumb Button): 11 10
 Button 11 (back): 572 454
 Button 10 (forward): 572 454
 
-Button Group (Gray rocker): 8 9
-Button 8 (back): 616 383
-Button 9 (forward): 616 383
+Button Group (Gray rocker): 8 9 100
+Button 8 (Forward): 616 383
+Button 100 (Center): 616 383
+Button 9 (Back): 616 383
 
 Button Group (Gray slider): 6 7
 Button 6 (back): 652 308
@@ -103,16 +109,16 @@ View: Throttle Back
 -----------------------------------------------------------------------
 Image: warthog-cpuwolf-right.png
 
-Axis Group (Throttle axis knob): 3 4 
-Axis 3 (x): 506 195
-Axis 4 (y): 0 0
+Configuration Group 2: 506 195
+# Axis Group (Throttle Axis Knob): 3 4
+# Axis 3 (x): 506 195
+# Axis 4 (y): 0 0
+# Button 0 (Thumb Hat Switch Press): 481 208
 
+# Hat Switch Group (Thumb Hat Switch): 15 16 17 18
+# Button 15: 506 195
 Hat Switch 0 (Thumb Hat Switch): 423 150
 
-#Hat Switch Group (Thumb Hat Switch): 15 16 17 18
-#Button 15: 506 195
-
-Button 0 (Thumb Hat Switch Press): 481 208
 
 Button 14 (Red TOGA Button): 657 303
 
@@ -124,7 +130,7 @@ Button Group (Flaps): 21 22
 Button 21 (Up): 704 613
 Button 22 (Dn): 704 613
 
-Button 28 (Hidden PT6 Beta Range): 489 541
+Button 31 (Hidden PT6 Beta Range): 489 541
 
 
 Assignments:
@@ -151,16 +157,27 @@ Assignments:
 #	 joy_use_camera_ud	joy_use_camera_zoom	joy_use_gun_lr
 #	 joy_use_gun_ud	joy_use_vr_touchpad_x	joy_use_vr_touchpad_y
 #	 joy_use_vr_trigger	joy_use_commands
+
 Axis 0: joy_use_none
+Axis 0 Calibration: auto
 Axis 1: joy_use_none
+Axis 1 Calibration: auto
+
 Axis 2: joy_use_thro1
+
+Configuration Group 2 (Throttle Axis Knob): Axis 3 4 Button 0
 Axis 3: joy_use_commands
 Axis 3 Type: centerable
+Axis 3 Calibration: auto
+
 Axis 4: joy_use_commands
 Axis 4 Type: centerable
+
 Axis 5: joy_use_thro2
+
 Axis 6: joy_use_none
-Axis 7: joy_use_none
+
+Axis 7: joy_use_prop
 Axis 7 Type: centerable
 
 
@@ -169,11 +186,11 @@ Axis 7 Type: centerable
 # Button <button number>: <command path, like "sim/operation/quit">
 #	See X-Plane/Resources/plugins/Commands.txt for a complete list of commands
 Button 0: sim/GPS/g1000n3_cursor
-Button 1: sim/GPS/g1000n3_cursor
-Button 2: sim/GPS/g1000n3_fms_inner_down
-Button 3: sim/GPS/g1000n3_fms_outer_up
-Button 4: sim/GPS/g1000n3_fms_inner_up
-Button 5: sim/GPS/g1000n3_fms_outer_down
+#Button 1: sim/GPS/g1000n3_cursor
+#Button 2: sim/GPS/g1000n3_fms_inner_down
+Button 3: sim/engines/mixture_up
+#Button 4: sim/GPS/g1000n3_fms_inner_up
+Button 5: sim/engines/mixture_down
 Button 6: sim/GPS/g1000n3_range_up
 Button 7: sim/GPS/g1000n3_range_down
 Button 10: sim/GPS/g1000n3_ent
@@ -192,9 +209,13 @@ Button 24: tbm900/actuators/elec/starter_down
 Button 25: sim/replay/replay_controls_toggle
 Button 27: tbm900/actuators/gear/pump_cover
 Button 28: sim/engines/thrust_reverse_toggle
-Button 29: sim/engines/mixture_down
+Button 29: sim/engines/thrust_reverse_toggle
 Button 30: sim/engines/engage_starters
 Button 31: sim/engines/engage_starters
+
+Button 8: Momentary
+Button 9: Momentary
+Virtual Button 100: Release Button 8, Release Button 9
 
 Button 15: Momentary
 Virtual Button 102: Release Button 15
@@ -202,6 +223,13 @@ Button 16: Momentary
 Virtual Button 103: Release Button 16
 Button 19: Momentary
 Virtual Button 116: Release Button 19
+Button 23: Momentary
+Virtual Button 108: Release Button 23
+Button 24: Momentary
+Virtual Button 109: Release Button 24
+Button 26: Momentary
+Button 27: Momentary
+Virtual Button 110: Release Button 26, Release Button 27
 
 
 # FORMAT FOR HAT SWITCHES:

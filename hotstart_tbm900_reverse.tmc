@@ -4,6 +4,8 @@ include "target.tmh"
 //written by Wei Shuai <cpuwolf@gmail.com> 2018 Nov
 char light_flag;
 char flaps_flag;
+char igni_flag;
+char pump_flag;
 //program startup
 int main()
 {
@@ -27,13 +29,15 @@ int main()
 	
 	light_flag = 0;
 	flaps_flag = 0;
+	igni_flag = 0;
+	pump_flag = 0;
 	//throttle
 	//-->axis
 	MapAxis(&Throttle, THR_LEFT, DX_ZROT_AXIS);
 	MapAxis(&Throttle, THR_RIGHT, DX_Z_AXIS);
 	MapAxis(&Throttle, SCX, DX_XROT_AXIS);
 	MapAxis(&Throttle, SCY, DX_YROT_AXIS);
-	//MapAxis(&Throttle, THR_FC, DX_SLIDER_AXIS);
+	MapAxis(&Throttle, THR_FC, DX_SLIDER_AXIS);
 	//-->buttons
 	MapKey(&Throttle, SC, DX1);
 	MapKey(&Throttle, MSP, DX2);
@@ -43,21 +47,25 @@ int main()
 	MapKey(&Throttle, MSL, DX6);
 	MapKey(&Throttle, SPDF, DX7);
 	MapKey(&Throttle, SPDB, DX8);
-	MapKey(&Throttle, BSF, DX9);
-	MapKey(&Throttle, BSB, DX10);
+	//---
+	//MapKey(&Throttle, BSF, DX9);
+	//MapKey(&Throttle, BSB, DX10);
+	MapKey(&Throttle, BSF, CHAIN(EXEC("if(pump_flag>0) ActKey(PULSE+KEYON+DX9);else ActKey(PULSE+KEYON+DX10);"),EXEC("pump_flag=0;")));
+	MapKey(&Throttle, BSM, CHAIN(EXEC("if(pump_flag>1) ActKey(PULSE+KEYON+DX9);else ActKey(PULSE+KEYON+DX10);"),EXEC("pump_flag=1;")));
+	MapKey(&Throttle, BSB, CHAIN(EXEC("if(pump_flag>2) ActKey(PULSE+KEYON+DX9);else ActKey(PULSE+KEYON+DX10);"),EXEC("pump_flag=2;")));
+	//---
 	MapKey(&Throttle, CHF, DX11);
 	MapKey(&Throttle, CHB, DX12);
 	//---
 	//MapKey(&Throttle, PSF, DX13);
 	//MapKey(&Throttle, PSB, DX14);
-	//---
 	MapKey(&Throttle, PSF, CHAIN(EXEC("if(light_flag>0) ActKey(PULSE+KEYON+DX13);else ActKey(PULSE+KEYON+DX14);"),EXEC("light_flag=0;")));
 	MapKey(&Throttle, PSM, CHAIN(EXEC("if(light_flag>1) ActKey(PULSE+KEYON+DX13);else ActKey(PULSE+KEYON+DX14);"),EXEC("light_flag=1;")));
 	MapKey(&Throttle, PSB, CHAIN(EXEC("if(light_flag>2) ActKey(PULSE+KEYON+DX13);else ActKey(PULSE+KEYON+DX14);"),EXEC("light_flag=2;")));
 	//---
 	MapKey(&Throttle, LTB, DX15);
-	//reassign down below
-	//MapKey(&Throttle, EFLNORM, DX16);
+	//
+	MapKey(&Throttle, EFLNORM, DX16);
 	MapKey(&Throttle, EFRNORM, DX17);
 	MapKey(&Throttle, EOLMOTOR, DX18);
 	MapKey(&Throttle, EORMOTOR, DX19);
@@ -79,18 +87,25 @@ int main()
 	//---
 	//MapKey(&Throttle, FLAPU, DX22);
 	//MapKey(&Throttle, FLAPD, DX23);
-	//---
 	MapKey(&Throttle, FLAPU, CHAIN(EXEC("if(flaps_flag>0) ActKey(PULSE+KEYON+DX22);else ActKey(PULSE+KEYON+DX23);"),EXEC("flaps_flag=0;")));
 	MapKey(&Throttle, FLAPM, CHAIN(EXEC("if(flaps_flag>1) ActKey(PULSE+KEYON+DX22);else ActKey(PULSE+KEYON+DX23);"),EXEC("flaps_flag=1;")));
 	MapKey(&Throttle, FLAPD, CHAIN(EXEC("if(flaps_flag>2) ActKey(PULSE+KEYON+DX22);else ActKey(PULSE+KEYON+DX23);"),EXEC("flaps_flag=2;")));
 	//---
 	MapKey(&Throttle, EACON, DX24);
-	MapKey(&Throttle, RDRNRM, DX25);
+	//+++duplicate
+	MapKey(&Throttle, RDRNRM, PULSE+DX25);
+	MapKey(&Throttle, RDRDIS, PULSE+DX25);
+	//---duplicate
 	MapKey(&Throttle, APENG, DX26);
-	MapKey(&Throttle, APAH, DX27);
-	MapKey(&Throttle, APPAT, DX28);
-	//29 empty (assign to beta range)
-	//30 empty (assign to slideer--THR_FC)
+	//---
+	//MapKey(&Throttle, APPAT, DX27);
+	//MapKey(&Throttle, APALT, DX28);
+	MapKey(&Throttle, APPAT, CHAIN(EXEC("if(igni_flag>0) ActKey(PULSE+KEYON+DX27);else ActKey(PULSE+KEYON+DX28);"),EXEC("igni_flag=0;")));
+	MapKey(&Throttle, APAH, CHAIN(EXEC("if(igni_flag>1) ActKey(PULSE+KEYON+DX27);else ActKey(PULSE+KEYON+DX28);"),EXEC("igni_flag=1;")));
+	MapKey(&Throttle, APALT, CHAIN(EXEC("if(igni_flag>2) ActKey(PULSE+KEYON+DX27);else ActKey(PULSE+KEYON+DX28);"),EXEC("igni_flag=2;")));
+	//---
+	//29 empty
+	//30 empty
 	MapKey(&Throttle, EOLIGN, DX31);
 	MapKey(&Throttle, EORIGN, DX32);
 	//
@@ -99,21 +114,21 @@ int main()
 	MapKey(&Throttle, CSL, DXHATLEFT);
 	MapKey(&Throttle, CSR, DXHATRIGHT);
 	//THR_FC range: off/low idle/high idle/flight
-	KeyAxis(&Throttle, THR_FC, 0,
-		AXMAP1( //use AXMAP mode 1
-		3, //Divide the axis range into equal areas
-		PULSE+DX30, //when axis value is increasing, pulse in each area
-		PULSE+DX16 //when axis value is decreasing, pulse in each area
-		));
+	//KeyAxis(&Throttle, THR_FC, 0,
+	//	AXMAP1( //use AXMAP mode 1
+	//	3, //Divide the axis range into equal areas
+	//	PULSE+DX30, //when axis value is increasing, pulse in each area
+	//	PULSE+DX29 //when axis value is decreasing, pulse in each area
+	//	));
 	//THR_RIGHT range 0~34 beta range 34~100 flight range
 	KeyAxis(&Throttle, THR_RIGHT, 0, AXMAP2(LIST(0,15,34,100),
 		CHAIN(LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1),
 			LED(&Throttle, LED_ONOFF,LED_CURRENT+LED2),
 			LED(&Throttle, LED_INTENSITY, 200)),
-		CHAIN(DOWN+DX29,LED(&Throttle, LED_ONOFF,LED_CURRENT+LED1),
+		CHAIN(DOWN+DX30,LED(&Throttle, LED_ONOFF,LED_CURRENT+LED1),
 			LED(&Throttle, LED_ONOFF, LED_CURRENT-LED2),
 			LED(&Throttle, LED_INTENSITY, 80)),
-		CHAIN(UP+DX29,LED(&Throttle, LED_ONOFF,LED_CURRENT-LED1),
+		CHAIN(UP+DX30,LED(&Throttle, LED_ONOFF,LED_CURRENT-LED1),
 			LED(&Throttle, LED_ONOFF, LED_CURRENT-LED2),
 			LED(&Throttle, LED_INTENSITY, 0))
 		));
