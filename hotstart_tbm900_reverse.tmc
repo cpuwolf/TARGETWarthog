@@ -6,6 +6,20 @@ char light_flag;
 char flaps_flag;
 char igni_flag;
 char pump_flag;
+
+int chain_light_up;
+int chain_light_down;
+
+int chain_flaps_up;
+int chain_flaps_down;
+
+int chain_igni_up;
+int chain_igni_down;
+
+int chain_pump_up;
+int chain_pump_down;
+
+
 //program startup
 int main()
 {
@@ -50,26 +64,22 @@ int main()
 	//---
 	//MapKey(&Throttle, BSF, DX9);
 	//MapKey(&Throttle, BSB, DX10);
-	MapKey(&Throttle, BSF, CHAIN(EXEC("if(pump_flag>0) ActKey(PULSE+KEYON+DX9);else ActKey(PULSE+KEYON+DX10);"),
-		EXEC("ActKey(PULSE+KEYON+DX9);"),
-		EXEC("pump_flag=0;")));
+	chain_pump_up = CHAIN(PULSE+DX9,D(50),PULSE+DX9);
+	chain_pump_down = CHAIN(PULSE+DX10,D(50),PULSE+DX10);
+	MapKey(&Throttle, BSF, CHAIN(EXEC("if(pump_flag>0) ActKey(KEYON+chain_pump_up);else ActKey(PULSE+KEYON+DX10);"),EXEC("pump_flag=0;")));
 	MapKey(&Throttle, BSM, CHAIN(EXEC("if(pump_flag>1) ActKey(PULSE+KEYON+DX9);else ActKey(PULSE+KEYON+DX10);"),EXEC("pump_flag=1;")));
-	MapKey(&Throttle, BSB, CHAIN(EXEC("if(pump_flag>2) ActKey(PULSE+KEYON+DX9);else ActKey(PULSE+KEYON+DX10);"),
-		EXEC("ActKey(PULSE+KEYON+DX10);"),
-		EXEC("pump_flag=2;")));
+	MapKey(&Throttle, BSB, CHAIN(EXEC("if(pump_flag>2) ActKey(PULSE+KEYON+DX9);else ActKey(KEYON+chain_pump_down);"),EXEC("pump_flag=2;")));
 	//---
 	MapKey(&Throttle, CHF, DX11);
 	MapKey(&Throttle, CHB, DX12);
 	//---
 	//MapKey(&Throttle, PSF, DX13);
 	//MapKey(&Throttle, PSB, DX14);
-	MapKey(&Throttle, PSF, CHAIN(EXEC("if(light_flag>0) ActKey(PULSE+KEYON+DX13);else ActKey(PULSE+KEYON+DX14);"),
-		EXEC("ActKey(PULSE+KEYON+DX13);"),
-		EXEC("light_flag=0;")));
+	chain_light_up = CHAIN(PULSE+DX13,D(50),PULSE+DX13);
+	chain_light_down = CHAIN(PULSE+DX14,D(50),PULSE+DX14);
+	MapKey(&Throttle, PSF, CHAIN(EXEC("if(light_flag>0) ActKey(KEYON+chain_light_up);else ActKey(PULSE+KEYON+DX14);"),EXEC("light_flag=0;")));
 	MapKey(&Throttle, PSM, CHAIN(EXEC("if(light_flag>1) ActKey(PULSE+KEYON+DX13);else ActKey(PULSE+KEYON+DX14);"),EXEC("light_flag=1;")));
-	MapKey(&Throttle, PSB, CHAIN(EXEC("if(light_flag>2) ActKey(PULSE+KEYON+DX13);else ActKey(PULSE+KEYON+DX14);"),
-		EXEC("ActKey(PULSE+KEYON+DX14);"),
-		EXEC("light_flag=2;")));
+	MapKey(&Throttle, PSB, CHAIN(EXEC("if(light_flag>2) ActKey(PULSE+KEYON+DX13);else ActKey(KEYON+chain_light_down);"),EXEC("light_flag=2;")));
 	//---
 	MapKey(&Throttle, LTB, DX15);
 	//
@@ -95,13 +105,11 @@ int main()
 	//---
 	//MapKey(&Throttle, FLAPU, DX22);
 	//MapKey(&Throttle, FLAPD, DX23);
-	MapKey(&Throttle, FLAPU, CHAIN(EXEC("if(flaps_flag>0) ActKey(PULSE+KEYON+DX22);else ActKey(PULSE+KEYON+DX23);"),
-		EXEC("ActKey(PULSE+KEYON+DX22);"),
-		EXEC("flaps_flag=0;")));
+	chain_flaps_up = CHAIN(PULSE+DX22,D(50),PULSE+DX22);
+	chain_flaps_down = CHAIN(PULSE+DX23,D(50),PULSE+DX23);
+	MapKey(&Throttle, FLAPU, CHAIN(EXEC("if(flaps_flag>0) ActKey(KEYON+chain_flaps_up);else ActKey(PULSE+KEYON+DX23);"),EXEC("flaps_flag=0;")));
 	MapKey(&Throttle, FLAPM, CHAIN(EXEC("if(flaps_flag>1) ActKey(PULSE+KEYON+DX22);else ActKey(PULSE+KEYON+DX23);"),EXEC("flaps_flag=1;")));
-	MapKey(&Throttle, FLAPD, CHAIN(EXEC("if(flaps_flag>2) ActKey(PULSE+KEYON+DX22);else ActKey(PULSE+KEYON+DX23);"),
-		EXEC("ActKey(PULSE+KEYON+DX23);"),
-		EXEC("flaps_flag=2;")));
+	MapKey(&Throttle, FLAPD, CHAIN(EXEC("if(flaps_flag>2) ActKey(PULSE+KEYON+DX22);else ActKey(KEYON+chain_flaps_down);"),EXEC("flaps_flag=2;")));
 	//---
 	MapKey(&Throttle, EACON, DX24);
 	//+++duplicate
@@ -112,13 +120,11 @@ int main()
 	//---
 	//MapKey(&Throttle, APPAT, DX27);
 	//MapKey(&Throttle, APALT, DX28);
-	MapKey(&Throttle, APPAT, CHAIN(EXEC("if(igni_flag>0) ActKey(PULSE+KEYON+DX27);else ActKey(PULSE+KEYON+DX28);"),
-		EXEC("ActKey(PULSE+KEYON+DX27);"),
-		EXEC("igni_flag=0;")));
+	chain_igni_up = CHAIN(PULSE+DX27,D(50),PULSE+DX27);
+	chain_igni_down = CHAIN(PULSE+DX28,D(50),PULSE+DX28);	
+	MapKey(&Throttle, APPAT, CHAIN(EXEC("if(igni_flag>0) ActKey(KEYON+chain_igni_up);else ActKey(PULSE+KEYON+DX28);"),EXEC("igni_flag=0;")));
 	MapKey(&Throttle, APAH, CHAIN(EXEC("if(igni_flag>1) ActKey(PULSE+KEYON+DX27);else ActKey(PULSE+KEYON+DX28);"),EXEC("igni_flag=1;")));
-	MapKey(&Throttle, APALT, CHAIN(EXEC("if(igni_flag>2) ActKey(PULSE+KEYON+DX27);else ActKey(PULSE+KEYON+DX28);"),
-		EXEC("ActKey(PULSE+KEYON+DX28);"),
-		EXEC("igni_flag=2;")));
+	MapKey(&Throttle, APALT, CHAIN(EXEC("if(igni_flag>2) ActKey(PULSE+KEYON+DX27);else ActKey(KEYON+chain_igni_down);"),EXEC("igni_flag=2;")));
 	//---
 	//29 empty
 	//30 empty
