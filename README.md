@@ -11,6 +11,10 @@ highly customize Hotas Warthog dual throttle for X-Plane 11 HotStart TBM-900 air
     Download software T.A.R.G.E.T - Software v3.0.18.328 v2, we will need TARGET Script Editor later. and don't forget to install it
 1. X-Plane 11
 
+## make shortcut of Windows ##
+
+"C:\Program Files (x86)\Thrustmaster\TARGET\x64\TARGETGUI.exe" -r hotstart_tbm900_reverse.tmc
+
 ## maintainence website ##
 
 https://forums.x-plane.org/index.php?/files/file/48249-warthog-throttle-deep-customization-for-tbm-900-win/
