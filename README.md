@@ -34,6 +34,8 @@ https://www.youtube.com/user/cpuwolf/
 
 ## AirFoilLabs King Air 350 Demo ##
 
+![TARGETWarthog](B350_throttle.gif)
+
 thrustmaster throttle: KA350 alpha, beta, reverse works
 
 https://www.youtube.com/watch?v=4TU3JEj20GU
