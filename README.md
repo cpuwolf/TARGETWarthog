@@ -30,3 +30,15 @@ https://www.youtube.com/user/cpuwolf/
 
 ![TARGETWarthog](ui_adv.jpg)
 
+## AirFoilLabs King Air 350 Demo ##
+
+https://www.youtube.com/watch?v=4TU3JEj20GU
+
+## AFL King Air 350 joystick settings ##
+
+![TARGETWarthog](b350_1.jpg)
+
+![TARGETWarthog](b350_2.jpg)
+
+![TARGETWarthog](b350_3.jpg)
+
