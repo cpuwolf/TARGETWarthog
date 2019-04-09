@@ -36,9 +36,9 @@ https://www.youtube.com/watch?v=4TU3JEj20GU
 
 ## AFL King Air 350 joystick settings ##
 
-![TARGETWarthog](b350_1.jpg)
+![TARGETWarthog](B350_1.jpg)
 
-![TARGETWarthog](b350_2.jpg)
+![TARGETWarthog](B350_2.jpg)
 
-![TARGETWarthog](b350_3.jpg)
+![TARGETWarthog](B350_3.jpg)
 
