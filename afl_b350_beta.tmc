@@ -1,0 +1,178 @@
+include "target.tmh"
+
+
+//written by Wei Shuai <cpuwolf@gmail.com> 2018 Nov
+//modified April 2019 for AFL B350
+
+char light_flag;
+char flaps_flag;
+char igni_flag;
+char pump_flag;
+
+int chain_light_up;
+int chain_light_down;
+
+int chain_flaps_up;
+int chain_flaps_down;
+
+int chain_igni_up;
+int chain_igni_down;
+
+int chain_pump_up;
+int chain_pump_down;
+
+
+//program startup
+int main()
+{
+	//Exclude joystick
+	Configure(&Joystick,MODE_EXCLUDED);
+	Configure(&JoystickF18,MODE_EXCLUDED);
+	Configure(&HCougar,MODE_EXCLUDED);
+	Configure(&T16000,MODE_EXCLUDED);
+	Configure(&T16000L,MODE_EXCLUDED);
+	Configure(&LMFD,MODE_EXCLUDED);
+	Configure(&RMFD,MODE_EXCLUDED);
+	Configure(&TFRPRudder,MODE_EXCLUDED);
+	Configure(&TFRPHARudder,MODE_EXCLUDED);
+	Configure(&TWCSThrottle,MODE_EXCLUDED);
+	
+	
+    if(Init(&EventHandle)) return 1; // declare the event handler, return on error
+	
+	//initialize backlight power
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_INTENSITY, 0));
+	//initialize LED status all "OFF"
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED1)); //set LED 1 OFF
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED2)); //set LED 2 OFF
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED3)); //set LED 3 OFF
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED4)); //set LED 4 OFF
+	ActKey(PULSE+KEYON+LED(&Throttle, LED_ONOFF, LED_CURRENT-LED5)); //set LED 5 OFF
+	
+	light_flag = 0;
+	flaps_flag = 0;
+	igni_flag = 0;
+	pump_flag = 0;
+	//throttle
+	//-->axis
+	MapAxis(&Throttle, THR_LEFT, DX_ZROT_AXIS);
+	MapAxis(&Throttle, THR_RIGHT, DX_Z_AXIS);
+	MapAxis(&Throttle, SCX, DX_XROT_AXIS);
+	MapAxis(&Throttle, SCY, DX_YROT_AXIS);
+	MapAxis(&Throttle, THR_FC, DX_THROTTLE_AXIS);
+	//-->buttons
+	MapKey(&Throttle, SC, DX1);
+	MapKey(&Throttle, MSP, DX2);
+	MapKey(&Throttle, MSU, DX3);
+	MapKey(&Throttle, MSR, DX4);
+	MapKey(&Throttle, MSD, DX5);
+	MapKey(&Throttle, MSL, DX6);
+	MapKey(&Throttle, SPDF, DX7);
+	MapKey(&Throttle, SPDB, DX8);
+	//---
+	//MapKey(&Throttle, BSF, DX9);
+	//MapKey(&Throttle, BSB, DX10);
+	chain_pump_up = CHAIN(PULSE+DX9,D(50),PULSE+DX9);
+	chain_pump_down = CHAIN(PULSE+DX10,D(50),PULSE+DX10);
+	MapKey(&Throttle, BSF, CHAIN(EXEC("if(pump_flag>0) ActKey(KEYON+chain_pump_up);else ActKey(PULSE+KEYON+DX10);"),EXEC("pump_flag=0;")));
+	MapKey(&Throttle, BSM, CHAIN(EXEC("if(pump_flag>1) ActKey(PULSE+KEYON+DX9);else ActKey(PULSE+KEYON+DX10);"),EXEC("pump_flag=1;")));
+	MapKey(&Throttle, BSB, CHAIN(EXEC("if(pump_flag>2) ActKey(PULSE+KEYON+DX9);else ActKey(KEYON+chain_pump_down);"),EXEC("pump_flag=2;")));
+	//---
+	MapKey(&Throttle, CHF, DX11);
+	MapKey(&Throttle, CHB, DX12);
+	//---
+	//MapKey(&Throttle, PSF, DX13);
+	//MapKey(&Throttle, PSB, DX14);
+	chain_light_up = CHAIN(PULSE+DX13,D(50),PULSE+DX13);
+	chain_light_down = CHAIN(PULSE+DX14,D(50),PULSE+DX14);
+	MapKey(&Throttle, PSF, CHAIN(EXEC("if(light_flag>0) ActKey(KEYON+chain_light_up);else ActKey(PULSE+KEYON+DX14);"),EXEC("light_flag=0;")));
+	MapKey(&Throttle, PSM, CHAIN(EXEC("if(light_flag>1) ActKey(PULSE+KEYON+DX13);else ActKey(PULSE+KEYON+DX14);"),EXEC("light_flag=1;")));
+	MapKey(&Throttle, PSB, CHAIN(EXEC("if(light_flag>2) ActKey(PULSE+KEYON+DX13);else ActKey(KEYON+chain_light_down);"),EXEC("light_flag=2;")));
+	//---
+	MapKey(&Throttle, LTB, DX15);
+	//
+	MapKey(&Throttle, EFLNORM, DX16);
+	MapKey(&Throttle, EFRNORM, DX17);
+	MapKey(&Throttle, EOLMOTOR, DX18);
+	MapKey(&Throttle, EORMOTOR, DX19);
+	//my defined DX keys+
+	//KeyAxis(&Throttle, SCX, 0, AXMAP2(LIST(0,5,50,95,100),
+	//	DOWN+DX16,
+	//	UP+DX16,
+	//	UP+DX17,
+	//	DOWN+DX17));
+	//KeyAxis(&Throttle, SCY, 0, AXMAP2(LIST(0,5,50,95,100),
+	//	DOWN+DX18,
+	//	UP+DX18,
+	//	UP+DX19,
+	//	DOWN+DX19));
+	//my defined DX keys-
+	MapKey(&Throttle, APUOFF, DX20);
+	MapKey(&Throttle, LDGH, DX21);
+	
+	//---
+	//MapKey(&Throttle, FLAPU, DX22);
+	//MapKey(&Throttle, FLAPD, DX23);
+	chain_flaps_up = CHAIN(PULSE+DX22,D(50),PULSE+DX22);
+	chain_flaps_down = CHAIN(PULSE+DX23,D(50),PULSE+DX23);
+	MapKey(&Throttle, FLAPU, CHAIN(EXEC("if(flaps_flag>0) ActKey(KEYON+chain_flaps_up);else ActKey(PULSE+KEYON+DX23);"),EXEC("flaps_flag=0;")));
+	MapKey(&Throttle, FLAPM, CHAIN(EXEC("if(flaps_flag>1) ActKey(PULSE+KEYON+DX22);else ActKey(PULSE+KEYON+DX23);"),EXEC("flaps_flag=1;")));
+	MapKey(&Throttle, FLAPD, CHAIN(EXEC("if(flaps_flag>2) ActKey(PULSE+KEYON+DX22);else ActKey(KEYON+chain_flaps_down);"),EXEC("flaps_flag=2;")));
+	//---
+	MapKey(&Throttle, EACON, DX24);
+	//+++duplicate
+	MapKey(&Throttle, RDRNRM, PULSE+DX25);
+	MapKey(&Throttle, RDRDIS, PULSE+DX25);
+	//---duplicate
+	MapKey(&Throttle, APENG, DX26);
+	//---
+	//MapKey(&Throttle, APPAT, DX27);
+	//MapKey(&Throttle, APALT, DX28);
+	chain_igni_up = CHAIN(PULSE+DX27,D(50),PULSE+DX27);
+	chain_igni_down = CHAIN(PULSE+DX28,D(50),PULSE+DX28);	
+	MapKey(&Throttle, APPAT, CHAIN(EXEC("if(igni_flag>0) ActKey(KEYON+chain_igni_up);else ActKey(PULSE+KEYON+DX28);"),EXEC("igni_flag=0;")));
+	MapKey(&Throttle, APAH, CHAIN(EXEC("if(igni_flag>1) ActKey(PULSE+KEYON+DX27);else ActKey(PULSE+KEYON+DX28);"),EXEC("igni_flag=1;")));
+	MapKey(&Throttle, APALT, CHAIN(EXEC("if(igni_flag>2) ActKey(PULSE+KEYON+DX27);else ActKey(KEYON+chain_igni_down);"),EXEC("igni_flag=2;")));
+	//---
+	//29 empty
+	//30 empty
+	MapKey(&Throttle, EOLIGN, DX31);
+	MapKey(&Throttle, EORIGN, DX32);
+	//
+	MapKey(&Throttle, CSU, DXHATUP);
+	MapKey(&Throttle, CSD, DXHATDOWN);
+	MapKey(&Throttle, CSL, DXHATLEFT);
+	MapKey(&Throttle, CSR, DXHATRIGHT);
+	//THR_FC range: off/low idle/high idle/flight
+	//KeyAxis(&Throttle, THR_FC, 0,
+	//	AXMAP1( //use AXMAP mode 1
+	//	3, //Divide the axis range into equal areas
+	//	PULSE+DX30, //when axis value is increasing, pulse in each area
+	//	PULSE+DX29 //when axis value is decreasing, pulse in each area
+	//	));
+	//THR_RIGHT range 0~15 beta range 15~100 flight range
+	KeyAxis(&Throttle, THR_RIGHT, 0, AXMAP2(LIST(0,14,15,34,100),
+		CHAIN(PULSE+DX29, LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1),
+			LED(&Throttle, LED_ONOFF,LED_CURRENT+LED2),
+			LED(&Throttle, LED_INTENSITY, 200)),
+		CHAIN(LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1),
+			LED(&Throttle, LED_ONOFF,LED_CURRENT+LED2),
+			LED(&Throttle, LED_INTENSITY, 200)),
+		CHAIN(PULSE+DX30,LED(&Throttle, LED_ONOFF,LED_CURRENT+LED1),
+			LED(&Throttle, LED_ONOFF, LED_CURRENT-LED2),
+			LED(&Throttle, LED_INTENSITY, 50)),
+		CHAIN(PULSE+DX30,LED(&Throttle, LED_ONOFF,LED_CURRENT-LED1),
+			LED(&Throttle, LED_ONOFF, LED_CURRENT-LED2),
+			LED(&Throttle, LED_INTENSITY, 0))
+		));
+	//
+	SetCustomCurve(&Throttle, THR_RIGHT, LIST(0,100, 14,0, 15,100, 34,0,  100,100)); //create a perfect linear response
+}
+
+//event handler
+int EventHandle(int type, alias o, int x)
+{
+    DefaultMapping(&o, x);
+	
+	//add event handling code here
+}
