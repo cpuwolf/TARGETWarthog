@@ -130,7 +130,11 @@ Button Group (Flaps): 21 22
 Button 21 (Up): 704 613
 Button 22 (Dn): 704 613
 
-Button 31 (Hidden PT6 Beta Range): 489 541
+Button Group (Power): 28 29
+Button 28 (Hidden PT6 reverse Range): 489 541
+Button 29 (Hidden PT6 beta Range): 489 541
+
+
 
 
 Assignments:
