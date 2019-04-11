@@ -151,11 +151,8 @@ int main()
 	//	PULSE+DX29 //when axis value is decreasing, pulse in each area
 	//	));
 	//THR_RIGHT range 0~15 beta range 15~100 flight range
-	KeyAxis(&Throttle, THR_RIGHT, 0, AXMAP2(LIST(0,14,15,34,100),
+	KeyAxis(&Throttle, THR_RIGHT, 0, AXMAP2(LIST(0,15,34,100),
 		CHAIN(PULSE+DX29, LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1),
-			LED(&Throttle, LED_ONOFF,LED_CURRENT+LED2),
-			LED(&Throttle, LED_INTENSITY, 200)),
-		CHAIN(LED(&Throttle, LED_ONOFF, LED_CURRENT+LED1),
 			LED(&Throttle, LED_ONOFF,LED_CURRENT+LED2),
 			LED(&Throttle, LED_INTENSITY, 200)),
 		CHAIN(PULSE+DX30,LED(&Throttle, LED_ONOFF,LED_CURRENT+LED1),
@@ -167,6 +164,10 @@ int main()
 		));
 	//
 	SetCustomCurve(&Throttle, THR_RIGHT, LIST(0,100, 14,0, 15,100, 34,0,  100,100)); //create a perfect linear response
+	
+	SetCustomCurve(&Throttle, THR_LEFT, LIST(0,100, 30,55, 80,55,  100,0));
+	
+	SetCustomCurve(&Throttle, THR_FC, LIST(0,100, 90,0, 100,0));
 }
 
 //event handler
